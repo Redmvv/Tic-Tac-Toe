@@ -9,10 +9,8 @@
 
   int main() {
 
-  char mod; 
-  string nameOne; 
-  string nameTwo; 
-
+  char mode; 
+ 
   cout << '\n'; 
     
   SetConsoleOutputCP(CP_UTF8);
@@ -42,7 +40,6 @@ cout << R"(
 ╚═══════════════════════════════════════════════════════════════╝
 )";
 
-
  cout << "\033[1;95m";
  cout << "\n GAME MENU\n\n";
  cout << "\033[95m"; 
@@ -63,19 +60,22 @@ cout << R"(
  cout << "\033[0m";  
  cout << '\n'; 
 
-  cin >> mod >> nameOne >> nameTwo; 
-
-  if (mod == '1') 
-
-  fill(nameOne, nameTwo); 
+  cin >> mode;
+  cout << '\n'; 
   
-  else if (mod == '2')
+  if (mode == '1') 
 
-  slide(nameOne, nameTwo); 
+  fill(); 
   
-  else if (mod == 'Q' || mod == 'q') return 0;
+  else if (mode == '2')
 
-  else cout << -1; 
+  slide(); 
+  
+  else if (mode == 'Q' || mode == 'q') return 0;
+
+  else cout << "\033[31m Invalid input\033[0m\n\n"; 
+
+  
 
   return 0; 
 
