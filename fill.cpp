@@ -6,7 +6,7 @@
 
  #define REST "\033[0m"  
  #define RED "\033[31m"  
- #define BLUE "\033[35m"  
+ #define BLUE "\033[34m"  
 
   class Player {
 
@@ -25,11 +25,12 @@
   random_device random_device; 
   mt19937 random_engine{random_device()}; 
   uniform_int_distribution distribution{1, 2};
+  short first = distribution(random_engine); 
+
   Player player1; 
   Player player2; 
   string nameOne; 
   string nameTwo; 
-  short first = distribution(random_engine); 
 
   cout << "\033[96m PLAYER1\033[0m Enter Your Name: "; 
   cin >> nameOne;
@@ -65,23 +66,23 @@
 
   if (player1.mark == 'X')  {
   
-  player2.mark = 'O'; 
-  player1.colored_mark +=  RED + player1.mark;
-  player2.colored_mark+=  BLUE + player2.mark; 
-
+    player2.mark = 'O'; 
+    player2.colored_mark = string(BLUE) + player2.mark + REST; 
+    player1.colored_mark = string(RED) + player1.mark + REST;
+      
  }
 
   else {
 
-  player2.mark = 'X';
-  player1.colored_mark +=  BLUE + player1.mark; 
-  player2.colored_mark +=  RED + player2.mark;
+    player2.mark = 'X';
+    player2.colored_mark = string(RED) + player2.mark + REST;
+    player1.colored_mark = string(BLUE) + player1.mark + REST; 
 
  }
 
-  cout << player1.colored_mark  << ' ' << player2.colored_mark; 
+
+  cout << player1.colored_mark << " " << player2.colored_mark; 
+
   cout << '\n'; 
      
-
-
  }

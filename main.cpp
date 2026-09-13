@@ -1,5 +1,4 @@
   #include <iostream>
-  #include <random>
   #include <string>
   #include <windows.h>
   #include "fill.h"
@@ -74,8 +73,6 @@ cout << R"(
   else if (mode == 'Q' || mode == 'q') return 0;
 
   else cout << "\033[31m Invalid input\033[0m\n\n"; 
-
-  
 
   return 0; 
 
