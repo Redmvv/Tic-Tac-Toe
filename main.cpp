@@ -1,5 +1,6 @@
   #include <iostream>
   #include <string>
+  #include <limits>
   #include <windows.h>
   #include "fill.h"
   #include "slide.h"
@@ -21,8 +22,6 @@
 )";
  
  cout << "\033[95m";
- cout << "\033[95m";
-
  cout << R"(
 ║      _______         ______              ______               ║
 ║     /_  __(_)____   /_  __/___ ______   /_  __/___  ___       ║
@@ -31,8 +30,6 @@
 ║    /_/ /_/\___/    /_/  \__,_/\___/    /_/  \____/\___/       ║
 ║                                                               ║
 )";
-
-cout << "\033[96m";
 
 cout << "\033[96m";
 cout << R"(
@@ -60,6 +57,7 @@ cout << R"(
  cout << '\n'; 
 
   cin >> mode;
+  cin.ignore(numeric_limits<streamsize>::max(), '\n');
   cout << '\n'; 
   
   if (mode == '1') 
