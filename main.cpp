@@ -1,9 +1,9 @@
-#include <iostream>
+  #include <iostream>
   #include <random>
   #include <string>
   #include <windows.h>
   #include "fill.h"
-  #include "slid.h"
+  #include "slide.h"
 
   using namespace std; 
 
@@ -63,19 +63,19 @@ cout << R"(
  cout << "\033[0m";  
  cout << '\n'; 
 
- cin >> mod; 
+  cin >> mod >> nameOne >> nameTwo; 
 
- if (mod == '1') 
+  if (mod == '1') 
 
   fill(nameOne, nameTwo); 
   
   else if (mod == '2')
 
-  slid(nameOne, nameTwo); 
+  slide(nameOne, nameTwo); 
   
-  else if  (mod == 'Q' || mod == 'q') return 0;
+  else if (mod == 'Q' || mod == 'q') return 0;
 
- else cout << -1; 
+  else cout << -1; 
 
   return 0; 
 

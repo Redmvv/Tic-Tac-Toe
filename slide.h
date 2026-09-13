@@ -2,4 +2,4 @@
  #include <string>
  using namespace std;  
 
- void slid(string nameOne, const string nameTwo); 
+ void slide(const string &nameOne, const string &nameTwo); 

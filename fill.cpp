@@ -1,7 +1,10 @@
-#include "fill.h"
-#include <iostream> 
-void fill(string nameOne, string nameTwo) {
+ #include <iostream> 
+ #include <string> 
+ #include "fill.h"
+ using namespace std; 
 
-    std::cout << "good " + nameOne; 
+ void fill(const string &nameOne, const string &nameTwo) {
+
+ cout << "fill " <<  nameOne << ' ' << nameTwo; 
     
 }
