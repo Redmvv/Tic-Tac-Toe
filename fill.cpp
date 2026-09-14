@@ -76,7 +76,8 @@
   fillBanner(); 
   printBoard(board);
   cout << "\n";
-}
+
+ }
   
   int r = (move - '0') / 3;
   int c = (move - '0') % 3;
