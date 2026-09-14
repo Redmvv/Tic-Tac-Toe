@@ -1,11 +1,10 @@
-#include <iostream> 
-#include <windows.h> 
-#include "ui.h" 
-#include "fill.h"
-using namespace std; 
-
-
-  string centerPad(int contentWidth, int fieldWidth , int consoleWidth) {
+ #include <iostream> 
+ #include <windows.h> 
+ #include "ui.h" 
+ #include "fill.h"
+ using namespace std; 
+ 
+   string centerPad(int contentWidth, int fieldWidth, int consoleWidth) {
 
     int basePad = (consoleWidth - fieldWidth) / 2;
     int extra = (fieldWidth - contentWidth) / 2;
@@ -13,10 +12,10 @@ using namespace std;
     if (extra < 0) extra = 0;
 
     return string(basePad + extra, ' ');
-}
 
+ }
 
-void printBoard(const char board[3][3]) {
+  void printBoard(const char board[3][3]) {
 
     int consoleWidth = 120;
     int boardWidth = 23;
@@ -94,17 +93,17 @@ void printBoard(const char board[3][3]) {
     cout << "   \n";
     cout << pad << "       ║       ║       \n";
     cout << '\n';
-}
+
+ }
 
 
-
-void clearScreen() {
+ void clearScreen() {
 
 cout << "\033[2J"; 
 
 }
 
-void printBanner() {
+   void printBanner() {
 
     cout << "\n\n";
 
@@ -130,5 +129,5 @@ void printBanner() {
     cout << string(padding, ' ') << R"(╚═══════════════════════════════════════════════════════════════╝)" << '\n';
 
     cout << "\033[0m";
-}
 
+}
