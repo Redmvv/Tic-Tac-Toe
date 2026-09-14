@@ -16,10 +16,12 @@
 
   public:
 
+  short score =  0;  
   char mark; 
   bool turn = false; 
   string name;
   string color;
+  string colored_mark;
   
   };
 
@@ -32,6 +34,59 @@
 
  };
 
+ 
+  Player player1; 
+  Player player2; 
+ 
+
+ 
+  void fillBanner() {
+
+    clearScreen();
+    printBanner();
+
+  cout << "\n";
+  cout << centerPad(11) << "\033[104m\033[1;30m FILL MODE \033[0m\n\n";
+  cout << centerPad(13) << "\033[90mBEST OF THREE\033[0m\n\n";
+
+  int visibleLen = (int)player1.name.size() + 1 + 1 + 6 + (int)player2.name.size() + 1 + 1;
+
+  cout << centerPad(visibleLen)
+     << player1.color << player1.name << "\033[0m" << " " << player1.colored_mark
+     << "  \033[97mVS\033[0m  "
+     << player2.color << player2.name << "\033[0m" << " " << player2.colored_mark
+     << "\n\n";
+
+  string scoreText = to_string(player1.score) + " - " + to_string(player2.score);
+  cout << centerPad((int)scoreText.size()) << "\033[97m" << scoreText << "\033[0m\n\n";
+
+ }
+
+
+ void fillMode() {
+
+  fillBanner(); 
+  printBoard(board);
+
+  for (int i = 0; i < 9; ++i) {
+
+  int move;
+  cin >> move;
+
+  int r = move / 3;
+  int c = move % 3;
+
+  board[r][c] = player1.mark;
+
+  fillMode();  
+  printBoard(board);
+  cout << "\n";
+
+ }
+
+ 
+}
+ 
   
  void fill() {
 
@@ -40,8 +95,6 @@
   uniform_int_distribution distribution{1, 2};
   short first = distribution(random_engine); 
 
-  Player player1; 
-  Player player2; 
   string nameOne; 
   string nameTwo; 
 
@@ -85,14 +138,19 @@
 
   if (player1.mark == 'X') {
   
+  player1.colored_mark = string(RED) + player1.mark + REST; 
   player2.mark = 'O'; 
+  player2.colored_mark = string(BLUE) + player2.mark + REST; 
  
  }
 
   else if (player1.mark == 'O') {
 
+  player1.colored_mark = string(BLUE) + player1.mark + REST; 
   player2.mark = 'X';
- 
+  player2.colored_mark = string(RED) + player2.mark + REST; 
+
+
  }
 
 
@@ -105,27 +163,8 @@
    
  }
 
-  clearScreen();
-  printBanner(); 
-  printBoard(board);
+  fillMode(); 
 
-  for (int i = 0; i < 9; ++i) {
 
-  int move;
-  cin >> move;
 
-  int r = move / 3;
-  int c = move % 3;
-
-  board[r][c] = player1.mark;
-
-  clearScreen();
-  printBanner(); 
-  printBoard(board);
-
- }
-
-  cout << "\n";
- 
- 
- }
+ } 
