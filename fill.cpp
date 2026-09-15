@@ -131,8 +131,9 @@
 
  }
 
-  cout << '\n'; 
-  cout << player1.color << player1.name << REST << " Choose Your Mark [X/O] ";  
+  cout << '\n';
+  cout << ' ' << player1.color << player1.name << REST << " will start!\n\n";
+  cout << " Choose your mark [X/O] " <<  "\033[90m> \033[0m";
   cin  >> player1.mark;
   cout << '\n'; 
   cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -164,7 +165,7 @@
   player2.mark = 'O'; 
   player2.colored_mark = string(BLUE) + player2.mark + REST;  
 
-  cout << "\033[90mPress Enter to continue... \033[0m";  
+  cout << " \033[90mPress Enter to continue... \033[0m";  
   cin.get();
   
  }
