@@ -14,16 +14,18 @@
   #define RED "\033[31m"  
   #define BLUE "\033[34m"  
 
+ 
   class Player {
 
   public:
 
   short score =  0;  
   char mark; 
-  bool turn = false; 
+  bool turn = false;
   string name;
   string color;
   string colored_mark;
+  vector<char*> moves; 
   
   };
 
@@ -35,6 +37,7 @@
 
  };
  
+  short currentGame = 1;  
   Player player1; 
   Player player2; 
   
@@ -45,11 +48,11 @@
 
   cout << "\n";
   cout << centerPad(11) << "\033[104m\033[1;30m FILL MODE \033[0m\n\n";
-  cout << centerPad(13) << "\033[90mBEST OF THREE\033[0m\n\n";
+  cout << centerPad(13) << "\033[90mBEST OF THREE  |  GAME " << currentGame << "\033[0m\n\n";
 
   int visibleLen = (int)player1.name.size() + 1 + 1 + 6 + (int)player2.name.size() + 1 + 1;
-
   cout << centerPad(visibleLen)
+
   << player1.color << player1.name << "\033[0m" << " " << player1.colored_mark
   << "  \033[97mVS\033[0m  "
   << player2.color << player2.name << "\033[0m" << " " << player2.colored_mark
@@ -64,29 +67,55 @@
 
   fillBanner(); 
   printBoard(board);
+
+  while (currentGame <= 3) {
+ 
+  for (int i = 1; i <= 9; ++i) {
+ 
+  if (player1.turn) {
+
+  short move;
+
+  cout << "\n  " << "\033[31m▸ \033[0m" << player1.color << player1.name << REST << "'s turn\n\n";
+  cin >> move; 
    
-  for (int i = 0; i < 9; ++i) {
-     
-  char move;
-  cin >> move;
+  short row = move / 3; 
+  short cloumn = move % 3;  
+  board[row][cloumn] = player1.mark;
+  player1.moves.push_back(&board[row][cloumn]);  
 
-  if (move - '0' < 0 || move - '0' > 8) {
+  }
+
+  else {
   
-  continue;  
-  fillBanner(); 
-  printBoard(board);
-  cout << "\n";
+  short move;
 
+  cout << "\n  " << "\033[31m▸ \033[0m" << player2.color << player2.name << REST << "'s turn\n\n"; 
+  cin >> move; 
+   
+  short row = move / 3; 
+  short cloumn = move % 3;  
+  board[row][cloumn] = player2.mark;
+  player2.moves.push_back(&board[row][cloumn]);
+  
  }
+
+  fillBanner();  
+  printBoard(board); 
+  player1.turn = !player1.turn; 
+
+  }
   
-  int r = (move - '0') / 3;
-  int c = (move - '0') % 3;
+  currentGame++;
 
-  board[r][c] = player1.mark;
-
-  fillBanner(); 
+  if (currentGame == 4 )  break;
+  
+  player1.moves.clear(); 
+  player2.moves.clear();
+  
+  fillBanner();  
+  resetBoard(board); 
   printBoard(board);
-  cout << "\n";
 
   }
   }
@@ -168,8 +197,8 @@
   cout << " \033[90mPress Enter to continue... \033[0m";  
   cin.get();
   
- }
+  }
 
-fillMode(); 
+  fillMode(); 
 
   } 
