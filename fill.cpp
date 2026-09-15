@@ -14,17 +14,18 @@
   #define RED "\033[31m"  
   #define BLUE "\033[34m"  
 
- 
   class Player {
 
   public:
 
+  short moves_count = 0; 
   short score =  0;  
   char mark; 
   bool turn = false;
   string name;
   string colored_mark;
   vector<char*> moves; 
+  vector<pair<int, int>> pos; 
   
   };
 
@@ -60,8 +61,20 @@
   string scoreText = to_string(player1.score) + " - " + to_string(player2.score);
   cout << centerPad((int)scoreText.size()) << "\033[97m" << scoreText << "\033[0m\n\n";
 
- }
+ } 
 
+
+  void checkWinner(Player *currentPlayer) {
+ 
+  if (currentPlayer->moves_count < 3) return; 
+
+//   else if (currentPlayer->moves_count == 3) {
+
+
+//   }
+
+} 
+   
   void fillMode() {
 
   fillBanner(); 
@@ -79,11 +92,15 @@
 
   short row = move / 3; 
   short cloumn = move % 3;  
-  board[row][cloumn] = currentPlayer->mark;
-  currentPlayer->moves.push_back(&board[row][cloumn]);  
 
+  board[row][cloumn] = currentPlayer->mark;
+  currentPlayer->moves.push_back(&board[row][cloumn]);
+  currentPlayer->moves_count++; 
+
+  checkWinner(currentPlayer); 
   fillBanner();  
   printBoard(board); 
+
   player1.turn = !player1.turn;  
 
   }
