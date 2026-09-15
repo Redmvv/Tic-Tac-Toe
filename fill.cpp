@@ -23,7 +23,6 @@
   char mark; 
   bool turn = false;
   string name;
-  string color;
   string colored_mark;
   vector<char*> moves; 
   
@@ -53,9 +52,9 @@
   int visibleLen = (int)player1.name.size() + 1 + 1 + 6 + (int)player2.name.size() + 1 + 1;
   cout << centerPad(visibleLen)
 
-  << player1.color << player1.name << "\033[0m" << " " << player1.colored_mark
+   << player1.name << "\033[0m" << " " << player1.colored_mark
   << "  \033[97mVS\033[0m  "
-  << player2.color << player2.name << "\033[0m" << " " << player2.colored_mark
+  << player2.name << "\033[0m" << " " << player2.colored_mark
   << "\n\n";
 
   string scoreText = to_string(player1.score) + " - " + to_string(player2.score);
@@ -72,37 +71,20 @@
  
   for (int i = 1; i <= 9; ++i) {
  
-  if (player1.turn) {
-
+  auto currentPlayer = (player1.turn ?  &player1 : &player2);  
   short move;
+  
+  cout << "\n  " << "\033[31m▸ \033[0m" << currentPlayer->name << "'s turn\n\n";
+  cin >> move;  
 
-  cout << "\n  " << "\033[31m▸ \033[0m" << player1.color << player1.name << REST << "'s turn\n\n";
-  cin >> move; 
-   
   short row = move / 3; 
   short cloumn = move % 3;  
-  board[row][cloumn] = player1.mark;
-  player1.moves.push_back(&board[row][cloumn]);  
-
-  }
-
-  else {
-  
-  short move;
-
-  cout << "\n  " << "\033[31m▸ \033[0m" << player2.color << player2.name << REST << "'s turn\n\n"; 
-  cin >> move; 
-   
-  short row = move / 3; 
-  short cloumn = move % 3;  
-  board[row][cloumn] = player2.mark;
-  player2.moves.push_back(&board[row][cloumn]);
-  
- }
+  board[row][cloumn] = currentPlayer->mark;
+  currentPlayer->moves.push_back(&board[row][cloumn]);  
 
   fillBanner();  
   printBoard(board); 
-  player1.turn = !player1.turn; 
+  player1.turn = !player1.turn;  
 
   }
   
@@ -140,28 +122,22 @@
 
  if (first == 1) {
 
-  player1.name = nameOne; 
-  player1.color = "\033[96m";
+  player1.name =  "\033[95m" + nameOne + REST; 
   player1.turn = true;  
-  
-  player2.name = nameTwo;
-  player2.color = "\033[95m"; 
-
+  player2.name =  "\033[96m" +  nameTwo + REST;
+   
  }
 
  else {
  
-  player1.name = nameTwo; 
-  player1.color = "\033[96m"; 
+  player1.name = "\033[96m" + nameTwo + REST;  
   player1.turn = true;  
-
-  player2.name = nameOne;
-  player2.color = "\033[95m"; 
+  player2.name = "\033[95m" + nameOne + REST; 
 
  }
 
   cout << '\n';
-  cout << ' ' << player1.color << player1.name << REST << " will start!\n\n";
+  cout << ' '  << player1.name << REST << " will start!\n\n";
   cout << " Choose your mark [X/O] " <<  "\033[90m> \033[0m";
   cin  >> player1.mark;
   cout << '\n'; 
@@ -187,7 +163,7 @@
 
  else {
 
-  cout << RED << " Invalid choice." <<  REST << " X has been assigned to " << player1.color << player1.name << REST << "\n\n";
+  cout << RED << " Invalid choice." <<  REST << " X has been assigned to " << player1.name << REST << "\n\n";
 
   player1.mark = 'X'; 
   player1.colored_mark = string(RED) + player1.mark + REST; 
