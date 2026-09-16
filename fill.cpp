@@ -21,7 +21,6 @@
 
  }; 
 
-//  Pos Moves; 
 
   class Player {
 
@@ -61,7 +60,7 @@
   int visibleLen = (int)player1.name.size() + 1 + 1 + 6 + (int)player2.name.size() + 1 + 1;
   cout << centerPad(visibleLen)
 
-   << player1.name << "\033[0m" << " " << player1.colored_mark
+  << player1.name << "\033[0m" << " " << player1.colored_mark
   << "  \033[97mVS\033[0m  "
   << player2.name << "\033[0m" << " " << player2.colored_mark
   << "\n\n";
@@ -106,6 +105,20 @@
   float y3 = currentPlayer->moves[2].y;
   float y4 = currentPlayer->moves[3].y;
 
+ 
+  if (x1 == x2  && x1 == x4 && x2 == x4 || y1 == y2  && y1 == y4 && y2 == y4 ) return true; 
+
+  else if ((y2-y1) / (x2-x1) == (y4-y2)/ (x4-x2)) return true;  
+ 
+  if (x1 == x3  && x1 == x4 && x3 == x4 || y1 == y3  && y3 == y4 && y3 == y4 ) return true; 
+
+  else if ((y3-y1) / (x3-x1) == (y4-y3)/ (x4-x3)) return true;  
+ 
+  if (x2 == x3  && x2 == x4 && x3 == x4 || y2 == y3  && y2 == y4 && y3 == y4 ) return true; 
+
+  else if ((y3-y2) / (x3-x2) == (y4-y3)/ (x4-x3)) return true;  
+
+
   break;
 
   }
@@ -123,7 +136,33 @@
   float y3 = currentPlayer->moves[2].y;
   float y4 = currentPlayer->moves[3].y;
   float y5 = currentPlayer->moves[4].y;
-  
+
+   
+  if (x1 == x2  && x1 == x5 && x2 == x5 || y1 == y2  && y1 == y5 && y2 == y5 ) return true; 
+
+  else if ((y2-y1) / (x2-x1) == (y5-y2)/ (x5-x2)) return true;  
+   
+  if (x1 == x3  && x1 == x5 && x3 == x5 || y1 == y3  && y1 == y5 && y3 == y5 ) return true; 
+
+  else if ((y3-y1) / (x3-x1) == (y5-y3)/ (x5-x3)) return true; 
+
+  if (x1 == x4  && x1 == x5 && x4 == x5 || y1 == y4  && y1 == y5 && y4 == y5 ) return true; 
+
+  else if ((y4-y1) / (x4-x1) == (y5-y4)/ (x5-x4)) return true;  
+   
+  if (x2 == x4  && x2 == x5 && x4 == x5 || y2 == y4  && y2 == y5 && y4 == y5 ) return true; 
+
+  else if ((y4-y2) / (x4-x2) == (y5-y4)/ (x5-x4)) return true;  
+
+  if (x3 == x4  && x3 == x5 && x4 == x5 || y3 == y4  && y3 == y5 && y4 == y5 ) return true; 
+
+  else if ((y4-y3) / (x4-x3) == (y5-y4)/ (x5-x4)) return true;  
+
+  if (x2 == x4  && x2 == x5 && x4 == x5 || y2 == y4  && y2 == y5 && y4 == y5 ) return true; 
+
+  else if ((y4-y2) / (x4-x2) == (y5-y4)/ (x5-x4)) return true;  
+
+
   break;
 
   }
@@ -166,13 +205,12 @@
 
   if (winner) {
 
-  cout << currentPlayer->name << " WON!!!!!!!!!!!!!\n\n"; 
   currentPlayer->score++;
-
   fillBanner();  
   printBoard(board); 
-  break;  
+  cout << currentPlayer->name << " WON!!!!!!!!!!!!!\n\n"; 
   this_thread::sleep_for(2.5s); 
+  break;
 
   }
 
@@ -191,7 +229,7 @@
   player2.moves.clear();
   player1.moves_count = 0; 
   player2.moves_count = 0; 
-  
+
   fillBanner();  
   resetBoard(board); 
   printBoard(board);
