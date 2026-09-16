@@ -21,7 +21,6 @@
 
  }; 
 
-
   class Player {
 
   public:
@@ -85,7 +84,6 @@
   float y2 = currentPlayer->moves[1].y;
   float y3 = currentPlayer->moves[2].y;
 
-
   if (x1 == x2  && x1 == x3 && x2 == x3 || y1 == y2  && y1 == y3 && y2 == y3 ) return true; 
 
   else if ((y2-y1) / (x2-x1) == (y3-y2)/ (x3-x2)) return true;  
@@ -105,7 +103,6 @@
   float y2 = currentPlayer->moves[1].y;
   float y3 = currentPlayer->moves[2].y;
   float y4 = currentPlayer->moves[3].y;
-
  
   if (x1 == x2  && x1 == x4 && x2 == x4 || y1 == y2  && y1 == y4 && y2 == y4 ) return true; 
 
@@ -118,7 +115,6 @@
   if (x2 == x3  && x2 == x4 && x3 == x4 || y2 == y3  && y2 == y4 && y3 == y4 ) return true; 
 
   else if ((y3-y2) / (x3-x2) == (y4-y3)/ (x4-x3)) return true;  
-
 
   break;
 
@@ -172,16 +168,19 @@
   } 
 
   return false; 
+
   }
   
   void fillMode() {
 
   fillBanner(); 
   printBoard(board);
+  
+  bool winner;
 
   while (currentGame <= 3) {
 
-  bool winner = false;   
+  winner = false;
  
   for (int i = 1; i <= 9; ++i) {
 
@@ -210,9 +209,14 @@
   fillBanner();  
   printBoard(board); 
 
-  cout  << currentPlayer->color << currentPlayer->name << REST << " WON!!!!!!!!!!!!!\n\n"; 
-  this_thread::sleep_for(2.5s); 
-  break;
+   string winText = currentPlayer->name + " TAKES GAME " + to_string(currentGame);
+
+  cout << "\n" << centerPad((int)winText.size())
+  << currentPlayer->color << currentPlayer->name << "\033[0m"
+  << " TAKES GAME " << currentGame << "\n\n";
+
+   this_thread::sleep_for(2.5s); 
+   break;
 
   }
 
@@ -222,7 +226,20 @@
   player1.turn = !player1.turn;  
 
   }
-  
+
+  if (!winner) {
+
+  int tieLen = (int)player1.name.size() + (int)player2.name.size() + 15; 
+
+   cout << "\n" << centerPad(tieLen)
+   << player1.color << player1.name << "\033[0m"
+   << " AND "
+   << player2.color << player2.name << "\033[0m"
+   << " TIE GAME " << currentGame << "\n\n";
+   this_thread::sleep_for(2.5s);
+
+ }
+
   currentGame++;
 
   if (currentGame == 4 )  break;
@@ -235,6 +252,41 @@
   fillBanner();  
   resetBoard(board); 
   printBoard(board);
+
+  }
+
+   currentGame--;
+   fillBanner(); 
+   printBoard(board);
+
+  if (player1.score > player2.score) {
+
+   string matchText = player1.name + " WINS THE MATCH";
+
+    cout << "\n" << centerPad((int)matchText.size())
+    << player1.color << player1.name << "\033[0m"
+    << " WINS THE MATCH\n\n";
+ }
+
+  else if (player2.score > player1.score) {
+
+   string matchText = player2.name + " WINS THE MATCH";
+   
+  cout << "\n" << centerPad((int)matchText.size())
+  << player2.color << player2.name << "\033[0m"
+  << " WINS THE MATCH\n\n";
+
+ }
+
+  else {
+
+ int matchTieLen = (int)player1.name.size() + (int)player2.name.size() + 15;
+
+  cout << "\n" << centerPad(matchTieLen)
+  << player1.color << player1.name << "\033[0m"
+  << " AND "
+  << player2.color << player2.name << "\033[0m"
+  << " TIE THE MATCH\n\n";
 
   }
   }
@@ -302,7 +354,7 @@
 
  }
 
- else {
+  else {
 
   cout << RED << " Invalid choice." <<  REST << " X has been assigned to " <<  player1.color << player1.name << REST << "\n\n";
 
