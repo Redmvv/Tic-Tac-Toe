@@ -31,6 +31,7 @@
   char mark; 
   bool turn = false;
   string name;
+  string color;
   string colored_mark;
   vector<Moves> moves;  
   
@@ -58,10 +59,10 @@
   cout << centerPad(13) << "\033[90mBEST OF THREE  |  GAME " << currentGame << "\033[0m\n\n";
 
   int visibleLen = (int)player1.name.size() + 1 + 1 + 6 + (int)player2.name.size() + 1 + 1;
-  cout << centerPad(visibleLen)
-
+  
+  cout << centerPad(visibleLen) << player1.color
   << player1.name << "\033[0m" << " " << player1.colored_mark
-  << "  \033[97mVS\033[0m  "
+  << "  \033[97mVS\033[0m  " << player2.color
   << player2.name << "\033[0m" << " " << player2.colored_mark
   << "\n\n";
 
@@ -158,10 +159,9 @@
 
   else if ((y4-y3) / (x4-x3) == (y5-y4)/ (x5-x4)) return true;  
 
-  if (x2 == x4  && x2 == x5 && x4 == x5 || y2 == y4  && y2 == y5 && y4 == y5 ) return true; 
+ if (x2 == x3  && x2 == x5 && x3 == x5 || y2 == y3  && y2 == y5 && y3 == y5 ) return true; 
 
-  else if ((y4-y2) / (x4-x2) == (y5-y4)/ (x5-x4)) return true;  
-
+  else if ((y3-y2) / (x3-x2) == (y5-y3)/ (x5-x3)) return true;
 
   break;
 
@@ -191,7 +191,7 @@
   auto currentPlayer = (player1.turn ?  &player1 : &player2);  
   short move;
   
-  cout << "\n  " << "\033[31m▸ \033[0m" << currentPlayer->name << "'s turn\n\n";
+  cout << "\n  " << "\033[31m▸ \033[0m" << currentPlayer->color << currentPlayer->name << REST << "'s turn\n";
   cin >> move;  
 
   short row = move / 3; 
@@ -206,9 +206,11 @@
   if (winner) {
 
   currentPlayer->score++;
+
   fillBanner();  
   printBoard(board); 
-  cout << currentPlayer->name << " WON!!!!!!!!!!!!!\n\n"; 
+
+  cout  << currentPlayer->color << currentPlayer->name << REST << " WON!!!!!!!!!!!!!\n\n"; 
   this_thread::sleep_for(2.5s); 
   break;
 
@@ -257,22 +259,26 @@
 
  if (first == 1) {
 
-  player1.name =  "\033[95m" + nameOne + REST; 
+  player1.name =  nameOne;  
+  player1.color = "\033[96m"; 
   player1.turn = true;  
-  player2.name =  "\033[96m" +  nameTwo + REST;
+  player2.name =  nameTwo;
+  player2.color = "\033[95m"; 
    
  }
 
  else {
  
-  player1.name = "\033[96m" + nameTwo + REST;  
+  player1.name =  nameTwo;
+  player1.color = "\033[95m";   
   player1.turn = true;  
-  player2.name = "\033[95m" + nameOne + REST; 
+  player2.name =   nameOne;
+  player2.color = "\033[96m";  
 
  }
 
   cout << '\n';
-  cout << ' '  << player1.name << REST << " will start!\n\n";
+  cout << ' ' << player1.color << player1.name << REST << " will start!\n\n";
   cout << " Choose your mark [X/O] " <<  "\033[90m> \033[0m";
   cin  >> player1.mark;
   cout << '\n'; 
@@ -298,7 +304,7 @@
 
  else {
 
-  cout << RED << " Invalid choice." <<  REST << " X has been assigned to " << player1.name << REST << "\n\n";
+  cout << RED << " Invalid choice." <<  REST << " X has been assigned to " <<  player1.color << player1.name << REST << "\n\n";
 
   player1.mark = 'X'; 
   player1.colored_mark = string(RED) + player1.mark + REST; 
