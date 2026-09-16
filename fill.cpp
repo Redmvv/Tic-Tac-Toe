@@ -14,6 +14,15 @@
   #define RED "\033[31m"  
   #define BLUE "\033[34m"  
 
+  struct Moves {
+
+  short y; 
+  short x; 
+
+ }; 
+
+//  Pos Moves; 
+
   class Player {
 
   public:
@@ -24,8 +33,7 @@
   bool turn = false;
   string name;
   string colored_mark;
-  vector<char*> moves; 
-  vector<pair<int, int>> pos; 
+  vector<Moves> moves;  
   
   };
 
@@ -63,27 +71,84 @@
 
  } 
 
-
-  void checkWinner(Player *currentPlayer) {
+  bool checkWinner(Player *currentPlayer) {
  
-  if (currentPlayer->moves_count < 3) return; 
+  switch (currentPlayer->moves_count) {  
+ 
+  case 3: {
 
-//   else if (currentPlayer->moves_count == 3) {
+  float x1 = currentPlayer->moves[0].x;
+  float x2 = currentPlayer->moves[1].x;
+  float x3 = currentPlayer->moves[2].x;
+
+  float y1 = currentPlayer->moves[0].y;
+  float y2 = currentPlayer->moves[1].y;
+  float y3 = currentPlayer->moves[2].y;
 
 
-//   }
+  if (x1 == x2  && x1 == x3 && x2 == x3 || y1 == y2  && y1 == y3 && y2 == y3 ) return true; 
 
-} 
-   
+  else if ((y2-y1) / (x2-x1) == (y3-y2)/ (x3-x2)) return true;  
+
+  break; 
+
+  }
+
+  case 4:  {
+
+  float x1 = currentPlayer->moves[0].x;
+  float x2 = currentPlayer->moves[1].x;
+  float x3 = currentPlayer->moves[2].x;
+  float x4 = currentPlayer->moves[3].x;
+
+  float y1 = currentPlayer->moves[0].y;
+  float y2 = currentPlayer->moves[1].y;
+  float y3 = currentPlayer->moves[2].y;
+  float y4 = currentPlayer->moves[3].y;
+
+  break;
+
+  }
+
+  case 5: {
+
+  float x1 = currentPlayer->moves[0].x;
+  float x2 = currentPlayer->moves[1].x;
+  float x3 = currentPlayer->moves[2].x;
+  float x4 = currentPlayer->moves[3].x;
+  float x5 = currentPlayer->moves[4].x;
+
+  float y1 = currentPlayer->moves[0].y;
+  float y2 = currentPlayer->moves[1].y;
+  float y3 = currentPlayer->moves[2].y;
+  float y4 = currentPlayer->moves[3].y;
+  float y5 = currentPlayer->moves[4].y;
+  
+  break;
+
+  }
+
+  default: return false;
+
+  } 
+
+  return false; 
+  }
+  
   void fillMode() {
 
   fillBanner(); 
   printBoard(board);
 
   while (currentGame <= 3) {
+
+  bool winner = false;   
  
   for (int i = 1; i <= 9; ++i) {
- 
+
+  short pos1 = 0; 
+  short pos2 = 0; 
+
   auto currentPlayer = (player1.turn ?  &player1 : &player2);  
   short move;
   
@@ -94,10 +159,23 @@
   short cloumn = move % 3;  
 
   board[row][cloumn] = currentPlayer->mark;
-  currentPlayer->moves.push_back(&board[row][cloumn]);
+  currentPlayer->moves.push_back({row, cloumn}); 
   currentPlayer->moves_count++; 
+ 
+  winner = checkWinner(currentPlayer); 
 
-  checkWinner(currentPlayer); 
+  if (winner) {
+
+  cout << currentPlayer->name << " WON!!!!!!!!!!!!!\n\n"; 
+  currentPlayer->score++;
+
+  fillBanner();  
+  printBoard(board); 
+  break;  
+  this_thread::sleep_for(2.5s); 
+
+  }
+
   fillBanner();  
   printBoard(board); 
 
@@ -111,6 +189,8 @@
   
   player1.moves.clear(); 
   player2.moves.clear();
+  player1.moves_count = 0; 
+  player2.moves_count = 0; 
   
   fillBanner();  
   resetBoard(board); 
