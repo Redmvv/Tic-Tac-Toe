@@ -133,8 +133,7 @@
   float y3 = currentPlayer->moves[2].y;
   float y4 = currentPlayer->moves[3].y;
   float y5 = currentPlayer->moves[4].y;
-
-   
+ 
   if (x1 == x2  && x1 == x5 && x2 == x5 || y1 == y2  && y1 == y5 && y2 == y5 ) return true; 
 
   else if ((y2-y1) / (x2-x1) == (y5-y2)/ (x5-x2)) return true;  
@@ -170,7 +169,44 @@
   return false; 
 
   }
-  
+
+  int getMove(const char board[3][3], Player *currentPlayer) {
+
+  int move;
+
+  while (true) {
+  cin >> move;
+
+  bool badInput = cin.fail() || move < 0 || move > 8;
+  bool taken = false;
+
+  if (!badInput) {
+
+  int row = move / 3, col = move % 3;
+  taken = (board[row][col] == 'X' || board[row][col] == 'O');
+
+  }
+
+  if (badInput || taken) {
+  cin.clear();
+  cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+  fillBanner();  
+  printBoard(board);
+
+  cout << "\n  " << "\033[31m▸ \033[0m" << currentPlayer->color << currentPlayer->name << REST << "'s turn\n";
+
+  string msg = badInput ? "Invalid input. Pick a number 0-8." : "That cell is already taken.";
+  cout << "\n  \033[90m▸ \033[0m\033[91m" << msg << "\033[0m\n\n";
+
+  }
+   
+  else return move;
+   
+ }
+ 
+ }
+
   void fillMode() {
 
   fillBanner(); 
@@ -183,18 +219,14 @@
   winner = false;
  
   for (int i = 1; i <= 9; ++i) {
-
-  short pos1 = 0; 
-  short pos2 = 0; 
-
-  auto currentPlayer = (player1.turn ?  &player1 : &player2);  
-  short move;
+    
+  auto currentPlayer = (player1.turn ? &player1 : &player2);  
   
   cout << "\n  " << "\033[31m▸ \033[0m" << currentPlayer->color << currentPlayer->name << REST << "'s turn\n";
-  cin >> move;  
+  short move = getMove(board, currentPlayer);
 
-  short row = move / 3; 
-  short cloumn = move % 3;  
+  short row = move  / 3; 
+  short cloumn = move  % 3;  
 
   board[row][cloumn] = currentPlayer->mark;
   currentPlayer->moves.push_back({row, cloumn}); 
@@ -209,14 +241,14 @@
   fillBanner();  
   printBoard(board); 
 
-   string winText = currentPlayer->name + " TAKES GAME " + to_string(currentGame);
+  string winText = currentPlayer->name + " TAKES GAME " + to_string(currentGame);
 
   cout << "\n" << centerPad((int)winText.size())
   << currentPlayer->color << currentPlayer->name << "\033[0m"
   << " TAKES GAME " << currentGame << "\n\n";
 
-   this_thread::sleep_for(2.5s); 
-   break;
+  this_thread::sleep_for(2.5s); 
+  break;
 
   }
 
@@ -231,12 +263,12 @@
 
   int tieLen = (int)player1.name.size() + (int)player2.name.size() + 15; 
 
-   cout << "\n" << centerPad(tieLen)
-   << player1.color << player1.name << "\033[0m"
-   << " AND "
-   << player2.color << player2.name << "\033[0m"
-   << " TIE GAME " << currentGame << "\n\n";
-   this_thread::sleep_for(2.5s);
+  cout << "\n" << centerPad(tieLen)
+  << player1.color << player1.name << "\033[0m"
+  << " AND "
+  << player2.color << player2.name << "\033[0m"
+  << " TIE GAME " << currentGame << "\n\n";
+  this_thread::sleep_for(2.5s);
 
  }
 
@@ -253,24 +285,25 @@
   resetBoard(board); 
   printBoard(board);
 
-  }
+}
 
-   currentGame--;
-   fillBanner(); 
-   printBoard(board);
+  currentGame--;
+  fillBanner(); 
+  printBoard(board);
 
-  if (player1.score > player2.score) {
+ if (player1.score > player2.score) {
 
-   string matchText = player1.name + " WINS THE MATCH";
+  string matchText = player1.name + " WINS THE MATCH";
 
-    cout << "\n" << centerPad((int)matchText.size())
-    << player1.color << player1.name << "\033[0m"
-    << " WINS THE MATCH\n\n";
+  cout << "\n" << centerPad((int)matchText.size())
+  << player1.color << player1.name << "\033[0m"
+  << " WINS THE MATCH\n\n";
+
  }
 
   else if (player2.score > player1.score) {
 
-   string matchText = player2.name + " WINS THE MATCH";
+  string matchText = player2.name + " WINS THE MATCH";
    
   cout << "\n" << centerPad((int)matchText.size())
   << player2.color << player2.name << "\033[0m"
@@ -288,8 +321,8 @@
   << player2.color << player2.name << "\033[0m"
   << " TIE THE MATCH\n\n";
 
-  }
-  }
+  } 
+  } 
  
   void fill() {
 

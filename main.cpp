@@ -1,8 +1,11 @@
   #include <iostream>
   #include <string>
+  #include <thread>
+  #include <chrono>
   #include <windows.h>
   #include "fill.h"
   #include "slide.h"
+  #include "ui.h"
 
   using namespace std; 
 
@@ -59,6 +62,7 @@ cout << R"(
  cout << '\n'; 
 
   cin >> mode;
+  cin.ignore(numeric_limits<streamsize>::max(), '\n');
   cout << '\n'; 
   
   if (mode == '1') 
@@ -71,8 +75,14 @@ cout << R"(
   
   else if (mode == 'Q' || mode == 'q') return 0;
 
-  else cout << "\033[31m Invalid input\033[0m\n\n"; 
+  else {
+    
+  cout << "\033[31m Invalid input\033[0m\n\n";
+  this_thread::sleep_for(1s);
+  restMenu(); 
 
-  return 0; 
+ }
 
-}
+ return 0;
+
+  }
