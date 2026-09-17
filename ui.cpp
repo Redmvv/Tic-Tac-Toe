@@ -1,21 +1,20 @@
-  #include <iostream> 
-  #include <thread>
+ #include <iostream> 
+ #include <thread>
  #include <chrono>
  #include <windows.h> 
  #include "ui.h" 
  #include "fill.h"
  #include "slide.h"
-
  using namespace std; 
  
-   string centerPad(int contentWidth, int fieldWidth, int consoleWidth) {
+  string centerPad(int contentWidth, int fieldWidth, int consoleWidth) {
 
-   int basePad = (consoleWidth - fieldWidth) / 2;
-   int extra = (fieldWidth - contentWidth) / 2;
+  int basePad = (consoleWidth - fieldWidth) / 2;
+  int extra = (fieldWidth - contentWidth) / 2;
 
-   if (extra < 0) extra = 0;
+  if (extra < 0) extra = 0;
 
-   return string(basePad + extra, ' ');
+  return string(basePad + extra, ' ');
 
  }
 
@@ -102,16 +101,16 @@
 
   void resetBoard(char board[3][3]) {
 
-   int count = 0;
+  int count = 0;
 
-   for (int row = 0; row < 3; row++) {
-   for (int col = 0; col < 3; col++) {
+  for (int row = 0; row < 3; row++) {
+  for (int col = 0; col < 3; col++) {
 
-   board[row][col] = '0' + count;
-   count++;
+  board[row][col] = '0' + count;
+  count++;
 
-   }
-   }
+  }
+  }
 
  }
 
@@ -153,7 +152,7 @@
   void restMenu() {
 
   clearScreen();   
- SetConsoleOutputCP(CP_UTF8);
+  SetConsoleOutputCP(CP_UTF8);
   
  cout << '\n'; 
  cout << "\033[96m";

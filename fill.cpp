@@ -1,13 +1,12 @@
- #include <iostream> 
- #include <string>
- #include <array> 
- #include <limits>
- #include <thread>
- #include <chrono>
- #include <random>
- #include "fill.h"
- #include "ui.h"
-
+  #include <iostream> 
+  #include <string>
+  #include <array> 
+  #include <limits>
+  #include <thread>
+  #include <chrono>
+  #include <random>
+  #include "fill.h"
+  #include "ui.h"
   using namespace std; 
 
   #define REST "\033[0m"  
@@ -68,7 +67,7 @@
   string scoreText = to_string(player1.score) + " - " + to_string(player2.score);
   cout << centerPad((int)scoreText.size()) << "\033[97m" << scoreText << "\033[0m\n\n";
 
- } 
+  } 
 
   bool checkWinner(Player *currentPlayer) {
  
@@ -197,15 +196,14 @@
   cout << "\n  " << "\033[31m▸ \033[0m" << currentPlayer->color << currentPlayer->name << REST << "'s turn\n";
 
   string msg = badInput ? "Invalid input. Pick a number 0-8." : "That cell is already taken.";
-  cout << "\n  \033[90m▸ \033[0m\033[91m" << msg << "\033[0m\n\n";
+  cout << "\n  \033[90m▸ \033[0m\033[91m" << msg << "\033[0m\n";
 
   }
    
   else return move;
    
- }
- 
- }
+  }
+  }
 
   void fillMode() {
 
@@ -247,7 +245,7 @@
   << currentPlayer->color << currentPlayer->name << "\033[0m"
   << " TAKES GAME " << currentGame << "\n\n";
 
-  this_thread::sleep_for(2.5s); 
+  this_thread::sleep_for(3s); 
   break;
 
   }
@@ -268,7 +266,7 @@
   << " AND "
   << player2.color << player2.name << "\033[0m"
   << " TIE GAME " << currentGame << "\n\n";
-  this_thread::sleep_for(2.5s);
+  this_thread::sleep_for(3s);
 
  }
 
@@ -285,7 +283,7 @@
   resetBoard(board); 
   printBoard(board);
 
-}
+  }
 
   currentGame--;
   fillBanner(); 
@@ -299,7 +297,7 @@
   << player1.color << player1.name << "\033[0m"
   << " WINS THE MATCH\n\n";
 
- }
+  }
 
   else if (player2.score > player1.score) {
 
@@ -309,7 +307,7 @@
   << player2.color << player2.name << "\033[0m"
   << " WINS THE MATCH\n\n";
 
- }
+  }
 
   else {
 
