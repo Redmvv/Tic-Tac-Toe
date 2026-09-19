@@ -149,9 +149,10 @@
 
  }
 
-  void restMenu() {
 
-  clearScreen();   
+  void restMenu() {
+     
+  clearScreen();
   SetConsoleOutputCP(CP_UTF8);
   
  cout << '\n'; 

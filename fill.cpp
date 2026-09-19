@@ -7,41 +7,13 @@
   #include <random>
   #include "fill.h"
   #include "ui.h"
+  #include "player.hpp"
   using namespace std; 
 
   #define REST "\033[0m"  
   #define RED "\033[31m"  
   #define BLUE "\033[34m"  
 
-  struct Moves {
-
-  short y; 
-  short x; 
-
- }; 
-
-  class Player {
-
-  public:
-
-  short moves_count = 0; 
-  short score =  0;  
-  char mark; 
-  bool turn = false;
-  string name;
-  string color;
-  string colored_mark;
-  vector<Moves> moves;  
-  
-  };
-
-  char board[3][3] = {
-
-  '0', '1', '2', 
-  '3', '4', '5',
-  '6', '7', '8' 
-
- };
  
   short currentGame = 1;  
   Player player1; 
@@ -69,7 +41,7 @@
 
   } 
 
-  bool checkWinner(Player *currentPlayer) {
+  bool checkWinnerFill(Player *currentPlayer) {
  
   switch (currentPlayer->moves_count) {  
  
@@ -207,6 +179,14 @@
 
   void fillMode() {
 
+ char board[3][3] = {
+
+  '0', '1', '2', 
+  '3', '4', '5',
+  '6', '7', '8' 
+
+ };
+
   fillBanner(); 
   printBoard(board);
   
@@ -230,7 +210,7 @@
   currentPlayer->moves.push_back({row, cloumn}); 
   currentPlayer->moves_count++; 
  
-  winner = checkWinner(currentPlayer); 
+  winner = checkWinnerFill(currentPlayer); 
 
   if (winner) {
 

@@ -78,7 +78,7 @@ cout << R"(
   else {
     
   cout << "\033[31m Invalid input\033[0m\n\n";
-  this_thread::sleep_for(1s);
+  this_thread::sleep_for(1s); 
   restMenu(); 
 
  }
