@@ -8,7 +8,7 @@
   #include "ui.h"
   #include "slide.h"
   #include "player.hpp"
- using namespace std; 
+  using namespace std; 
 
   #define REST "\033[0m"  
   #define RED "\033[31m"  
@@ -30,12 +30,9 @@
   << player2.name << "\033[0m" << " " << player2.colored_mark
   << "\n\n";
 
-  string scoreText = to_string(player1.score) + " - " + to_string(player2.score);
-  cout << centerPad((int)scoreText.size()) << "\033[97m" << scoreText << "\033[0m\n\n";
-
   } 
 
-   bool checkWinnerSilde(Player *currentPlayer) {
+  bool checkWinnerSilde(Player *currentPlayer) {
  
   if (currentPlayer->moves_count == 3) {  
  
@@ -51,9 +48,11 @@
 
   else if ((y2-y1) / (x2-x1) == (y3-y2)/ (x3-x2)) return true;  
 
-   } 
+ else currentPlayer->remove = true; 
+ 
+  } 
 
-   return false; 
+  return false; 
    
  }   
 
@@ -103,8 +102,60 @@
 
  };
 
+  bool winner = false; 
+
+  while (true) {
+
+  auto currentPlayer = (player1.turn ? &player1 : &player2);  
+
+  if (currentPlayer->remove) {
+ 
+  short row = currentPlayer->moves[0].y; 
+  short cloumn = currentPlayer->moves[0].x; 
+  board[row][cloumn] = currentPlayer->moves[0].cellNumber; 
+
+  currentPlayer->moves[0] = currentPlayer->moves[1]; 
+  currentPlayer->moves[1] = currentPlayer->moves[2]; 
+  currentPlayer->moves.pop_back(); 
+  currentPlayer->moves_count--; 
+
+  }
+
+  sildeBanner(player1, player2);  
+  printBoard(board);
+
+  cout << "\n  " << "\033[31m▸ \033[0m" << currentPlayer->color << currentPlayer->name << REST << "'s turn\n";
+  
+  short move = getMove(board, currentPlayer, player1, player2);
+  short row = move / 3; 
+  short cloumn = move % 3;  
+  char cellNum = move + '0'; 
+  
+  board[row][cloumn] = currentPlayer->mark;
+  currentPlayer->moves.push_back({row, cloumn,cellNum}); 
+  currentPlayer->moves_count++; 
+
+  winner = checkWinnerSilde(currentPlayer); 
+
+  if (winner) {
+
+  sildeBanner(player1, player2);  
+  printBoard(board);
+
+  string matchText = currentPlayer->name + " WINS THE MATCH";
+
+  cout << "\n" << centerPad((int)matchText.size())
+  << currentPlayer->color << currentPlayer->name << "\033[0m"
+  << " WINS THE MATCH\n\n";
+
+  break; 
 
  }
+
+  player1.turn = !player1.turn;  
+
+ }
+ } 
 
   void slide() {
 

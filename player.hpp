@@ -6,7 +6,7 @@
 
   short y; 
   short x; 
-  short cellNumber; 
+  char cellNumber; 
 
  }; 
 
@@ -18,6 +18,7 @@
   short score =  0;  
   char mark; 
   bool turn = false;
+  bool remove = false;
   string name;
   string color;
   string colored_mark;
